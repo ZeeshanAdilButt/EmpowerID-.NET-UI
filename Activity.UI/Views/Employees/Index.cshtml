@@ -1,0 +1,102 @@
+﻿@using EmployeeApp.Application.Core.ApplicationContracts.Responses.Example;
+@model GetAllEmployeeResponse
+
+@{
+    ViewData["Title"] = "Index";
+    var searchItem = ViewData["searchItem"] as string;
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form id="searchform" method="post">
+    <div>
+        <label for="searchTerm">Search:</label>
+        <input type="text" value="@searchItem" name="searchItem" id="searchItem" />
+        <button id="submit" type="submit">Search</button>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                First Name
+                
+            </th>
+            <th>
+                Last Name
+                
+            </th>
+            <th>
+                Email
+                
+            </th>
+            <th>
+                Date Of Birth
+                
+            </th>
+            <th>
+                Department
+                
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Data) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+          
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(function () {
+
+            $('#submit').on('click', function () {
+                $('#searchform').submit();
+            });
+
+
+
+            $('#searchItem').on('input', function () {
+
+                var searchTerm = $(this).val();
+
+                debugger;
+
+                if (searchTerm === "") {
+
+                    $('#submit').click();
+                }
+            });
+        });
+    </script>
+}
